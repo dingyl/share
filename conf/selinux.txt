@@ -1,4 +1,4 @@
 yum install setools-console
 yum install setroubleshoot
 
-getsebool -a  //查看所有的选项
+getsebool -a  //鏌ョ湅鎵�鏈夌殑閫夐」
