@@ -117,6 +117,8 @@ connect_from_port_20=YES
 # 当上面的deny_email_enable=YES时，可以利用这个设定项来规定哪些邮件地址不可登录vsftpd服务器
 # 此文件需用户自己创建，一行一个email address即可
 #banned_email_file=/etc/vsftpd/banned_emails
+
+
 # 用户登录FTP服务器后是否具有访问自己目录以外的其他文件的权限
 # 设置为YES时，用户被锁定在自己的home目录中，vsftpd将在下面chroot_list_file选项值的位置寻找chroot_list文件
 # 必须与下面的设置项配合
@@ -124,6 +126,9 @@ connect_from_port_20=YES
 # 被列入此文件的用户，在登录后将不能切换到自己目录以外的其他目录
 # 从而有利于FTP服务器的安全管理和隐私保护。此文件需自己建立
 #chroot_list_file=/etc/vsftpd/chroot_list
+
+
+
 # 是否允许递归查询。默认为关闭，以防止远程用户造成过量的I/O
 #ls_recurse_enable=YES
 # 是否允许监听。
@@ -136,6 +141,8 @@ listen=YES
 # 设置PAM外挂模块提供的认证服务所使用的配置文件名，即/etc/pam.d/vsftpd文件
 # 此文件中file=/etc/vsftpd/ftpusers字段，说明了PAM模块能抵挡的帐号内容来自文件/etc/vsftpd/ftpusers中
 #pam_service_name=vsftpd
+
+
 # 是否允许ftpusers文件中的用户登录FTP服务器，默认为NO
 # 若此项设为YES，则user_list文件中的用户允许登录FTP服务器
 # 而如果同时设置了userlist_deny=YES，则user_list文件中的用户将不允许登录FTP服务器，甚至连输入密码提示信息都没有

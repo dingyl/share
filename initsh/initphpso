@@ -1,0 +1,101 @@
+#!/bin/bash
+curpwd=`pwd`
+phpso=/tmp/share/phpso
+phpconfig=/usr/local/php/bin/php-config
+options=""
+cd $phpso
+gzlist=`ls`
+#读取phpso目录,安装PHP扩展
+for gz in $gzlist
+    do
+        cd $phpso
+        dirname=${gz%.t*}
+        soname=$(dirname%-*)
+        if [! -d $dirname ];then
+        fi
+            tar zxf $gz
+        cd $dirname
+        phpize
+        ./configure --with-php-config=$phpcofig
+        make && make install
+        if [ $soname = "php_screw" ]
+            cd tools;make;cp screw /usr/bin/
+        fi
+        cd ..
+        rm -rf $dirname
+        echo "$dirname installed successful"
+    done
+cd $curpwd
+
+
+memcache
+redis
+mongodb
+	./configure --with-php-config=$phpcofig
+
+xcache不同
+	./configure --with-php-config=$phpcofig --enable-xcache --enable-xcache-coverager --enable-xcache-optimizer
+	
+	2、创建xcache缓存文件
+		touch /tmp/xcache #创建文件
+		chmod 777 /tmp/xcache #设置权限
+	3、创建xcache管理员密码为123456
+		echo -n "123456" | md5sum #记住类似下面一行代码（md5加密之后的密码），后面会用到
+		e10adc3949ba59abbe56e057f20f883e
+	4、拷贝xcache后台管理程序到网站根目录
+		cp -r /usr/local/src/xcache-3.2.0/htdocs   /home/www/xcache
+		chown www:www -R /home/www/xcache #设置xcache目录和网站目录权限相同
+		系统运维 www.osyunwei.com 温馨提醒：qihang01原创内容©版权所有,转载请注明出处及原文链接
+	5、配置php支持xcache
+		vi /usr/local/php/etc/php.ini #编辑配置文件，在最后一行添加以下内容
+		[xcache-common]
+		extension = xcache.so
+		[xcache.admin]
+		xcache.admin.enable_auth = On
+		xcache.admin.user = "xcache"
+		xcache.admin.pass = "e10adc3949ba59abbe56e057f20f883e"
+		[xcache]
+		xcache.shm_scheme ="mmap"
+		xcache.size=60M
+		xcache.count =1
+		xcache.slots =8K
+		xcache.ttl=0
+		xcache.gc_interval =0
+		xcache.var_size=64M
+		xcache.var_count =1
+		xcache.var_slots =8K
+		xcache.var_ttl=0
+		xcache.var_maxttl=0
+		xcache.var_gc_interval =300
+		xcache.test =Off
+		xcache.readonly_protection = On
+		xcache.mmap_path ="/tmp/xcache"
+		xcache.coredump_directory =""
+		xcache.cacher =On
+		xcache.stat=On
+		xcache.optimizer =Off
+		[xcache.coverager]
+		xcache.coverager =On
+		xcache.coveragedump_directory =""
+
+xdebug
+	./configure --with-php-config=$phpcofig --enable-xdebug
+
+	mkdir -p /tmp/xdebug
+	chown www:www /tmp/xdebug
+	chmod 755 /tmp/xdebug
+
+	php.ini
+	xdebug.profiler_enable=on 
+	xdebug.trace_output_dir="/tmp/xdebug" 
+	xdebug.profiler_output_dir="/tmp/xdebug" 
+	xdebug.profiler_output_name="script" 
+php_screw
+	./configure --with-php-config=$phpcofig
+
+	cd tools
+	make
+	cp screw /usr/bin/
+
+./configure --with-php-config=/usr/local/php/bin/php-config
+/usr/local/php/lib/php/extensions/no-debug-non-zts-20121212/
