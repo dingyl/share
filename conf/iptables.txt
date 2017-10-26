@@ -172,32 +172,32 @@ linux下IPTABLES配置详解
 		[root@tp ~]# iptables -X -t nat
 		[root@tp ~]# iptables -Z -t nat
 
-2,添加规则
-添加基本的NAT地址转换,(关于如何配置NAT可以看我的另一篇文章),
-添加规则,我们只添加DROP链.因为默认链全是ACCEPT.
-防止外网用内网IP欺骗
-[root@tp sysconfig]# iptables -t nat -A PREROUTING -i eth0 -s 10.0.0.0/8 -j DROP
-[root@tp sysconfig]# iptables -t nat -A PREROUTING -i eth0 -s 172.16.0.0/12 -j DROP
-[root@tp sysconfig]# iptables -t nat -A PREROUTING -i eth0 -s 192.168.0.0/16 -j DROP
-如果我们想,比如阻止MSN,QQ,BT等的话,需要找到它们所用的端口或者IP,(个人认为没有太大必要)
-例：
-禁止与211.101.46.253的所有连接
-[root@tp ~]# iptables -t nat -A PREROUTING    -d 211.101.46.253 -j DROP
-禁用FTP(21)端口 
-[root@tp ~]# iptables -t nat -A PREROUTING -p tcp --dport 21 -j DROP
-这样写范围太大了,我们可以更精确的定义.
+	2,添加规则
+		添加基本的NAT地址转换,(关于如何配置NAT可以看我的另一篇文章),
+		添加规则,我们只添加DROP链.因为默认链全是ACCEPT.
+		防止外网用内网IP欺骗
+		[root@tp sysconfig]# iptables -t nat -A PREROUTING -i eth0 -s 10.0.0.0/8 -j DROP
+		[root@tp sysconfig]# iptables -t nat -A PREROUTING -i eth0 -s 172.16.0.0/12 -j DROP
+		[root@tp sysconfig]# iptables -t nat -A PREROUTING -i eth0 -s 192.168.0.0/16 -j DROP
+		如果我们想,比如阻止MSN,QQ,BT等的话,需要找到它们所用的端口或者IP,(个人认为没有太大必要)
+		例：
+		禁止与211.101.46.253的所有连接
+		[root@tp ~]# iptables -t nat -A PREROUTING    -d 211.101.46.253 -j DROP
+		禁用FTP(21)端口 
+		[root@tp ~]# iptables -t nat -A PREROUTING -p tcp --dport 21 -j DROP
+		这样写范围太大了,我们可以更精确的定义.
 
-[root@tp ~]# iptables -t nat -A PREROUTING    -p tcp --dport 21 -d 211.101.46.253 -j DROP 
-这样只禁用211.101.46.253地址的FTP连接,其他连接还可以.如web(80端口)连接.
-按照我写的,你只要找到QQ,MSN等其他软件的IP地址,和端口,以及基于什么协议,只要照着写就行了.
-最后：
-drop非法连接
-[root@tp ~]# iptables -A INPUT     -m state --state INVALID -j DROP
-[root@tp ~]# iptables -A OUTPUT    -m state --state INVALID -j DROP
-[root@tp ~]# iptables -A FORWARD -m state --state INVALID -j DROP
-允许所有已经建立的和相关的连接
-[root@tp ~]# iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-[root@tp ~]# iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-[root@tp ~]# /etc/rc.d/init.d/iptables save
-这样就可以写到/etc/sysconfig/iptables文件里了.写入后记得把防火墙重起一下,才能起作用．
-[root@tp ~]# service iptables restart
+		[root@tp ~]# iptables -t nat -A PREROUTING    -p tcp --dport 21 -d 211.101.46.253 -j DROP 
+		这样只禁用211.101.46.253地址的FTP连接,其他连接还可以.如web(80端口)连接.
+		按照我写的,你只要找到QQ,MSN等其他软件的IP地址,和端口,以及基于什么协议,只要照着写就行了.
+		最后：
+		drop非法连接
+		[root@tp ~]# iptables -A INPUT     -m state --state INVALID -j DROP
+		[root@tp ~]# iptables -A OUTPUT    -m state --state INVALID -j DROP
+		[root@tp ~]# iptables -A FORWARD -m state --state INVALID -j DROP
+		允许所有已经建立的和相关的连接
+		[root@tp ~]# iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+		[root@tp ~]# iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+		[root@tp ~]# /etc/rc.d/init.d/iptables save
+		这样就可以写到/etc/sysconfig/iptables文件里了.写入后记得把防火墙重起一下,才能起作用．
+		[root@tp ~]# service iptables restart
