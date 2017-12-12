@@ -1,0 +1,34 @@
+#!/bin/bash
+NAME="mysqld"
+BIN="/usr/local/mysql/bin/mysqld"
+RETVAL=0
+LOG="/Users/apple/log/init/mysql.log"
+start(){
+	nohup $BIN &> $LOG &
+	RETVAL=$?   
+}
+
+stop(){
+	pkill $NAME 
+}
+
+restart(){
+	stop
+	start
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		restart
+		;;
+	*)
+		echo "Usage:{start|stop|restart}"
+		RETVAL=1
+esac
+exit $RETVAL

@@ -1,0 +1,15 @@
+#!/bin/bash
+echo ""
+pstree | grep nginx
+echo ""
+pstree | grep php-fpm
+echo ""
+pstree | grep postgres
+echo ""
+pstree | grep ssdb
+echo ""
+pstree | grep redis
+echo ""
+pstree | grep elasticsearch
+echo ""
+pstree | grep mysql

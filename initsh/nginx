@@ -1,0 +1,35 @@
+#!/bin/bash
+#启动nginx
+NGINX=/usr/local/nginx/sbin/nginx
+RETVAL=0
+start() {
+    echo 'apple'|sudo -S nohup $NGINX &> /Users/apple/log/init/nginx.log  &
+    RETVAL=$?
+    return $RETVAL
+}
+ 
+stop() {
+    echo 'apple'|sudo -S pkill nginx
+}
+ 
+restart() {
+    stop
+    start
+}
+ 
+case "$1" in
+ start)
+    start
+    ;;
+ stop)
+    stop
+    ;;
+ restart)
+    restart
+    ;;
+  *)
+    echo "Usage:{start|stop|restart}"
+    RETVAL=1
+esac
+ 
+exit $RETVAL

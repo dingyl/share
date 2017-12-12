@@ -1,0 +1,10 @@
+#!/bin/bash
+#关闭所有服务
+./nginx stop
+./php-fpm stop
+./postgres stop
+./ssdb stop
+./redis stop
+./elasticsearch stop
+./mysql stop
+./server_status

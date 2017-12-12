@@ -1,0 +1,40 @@
+#!/bin/bash
+#启动ssdb
+SSDB=/usr/local/ssdb
+RETVAL=0
+start() {
+    nohup $SSDB/bin/ssdb-server -d $SSDB/conf/ssdb.conf &> /Users/apple/log/init/ssdb.log &
+    RETVAL=$?
+    return $RETVAL
+}
+
+stop() {
+  pkill ssdb
+  RETVAL=$?
+  return $RETVAL
+}
+ 
+restart() {
+  stop
+  start
+  RETVAL=$?
+  return $RETVAL
+}
+ 
+case "$1" in
+ start)
+    start
+    ;;
+ stop)
+    stop
+    ;;
+ restart)
+    stop
+    start
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|restart}"
+    RETVAL=1
+esac
+
+exit $RETVAL

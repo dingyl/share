@@ -1,0 +1,17 @@
+#!/bin/bash
+#启动nginx
+./nginx start
+#启动php-fpm   /usr/local/bin/fpm     /usr/local/etc/php-fpm.conf
+./php-fpm start
+#启动postgres
+./postgres start
+#启动ssdb
+./ssdb start
+#启动redis
+./redis start
+#启动elasticesearch
+./elasticsearch start
+启动mysql
+./mysql start
+
+./server_status
